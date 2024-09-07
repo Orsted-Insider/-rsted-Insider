@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const pdfFolder = 'pdfs/';
-    const repo = 'yourusername/webavis'; // Replace with your GitHub username and repository name
+    const pdfFolder = 'pdf/';
+    const repo = 'Orsted-Insider/oersted-Insider';
 
     function fetchPDFs() {
         return fetch(`https://api.github.com/repos/${repo}/contents/${pdfFolder}`)
