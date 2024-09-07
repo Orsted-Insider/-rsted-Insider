@@ -1,6 +1,10 @@
+import { getDocument, GlobalWorkerOptions } from './pdfjs-4.6.82-dist/build/pdf.mjs';
+
 document.addEventListener('DOMContentLoaded', function() {
     const pdfFolder = 'pdf/';
     const repo = 'Orsted-Insider/oersted-Insider';
+
+    GlobalWorkerOptions.workerSrc = './pdfjs-4.6.82-dist/build/pdf.worker.mjs';
 
     function fetchPDFs() {
         return fetch(`https://api.github.com/repos/${repo}/contents/${pdfFolder}`)
@@ -18,9 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const recentFile = files[0]; // Most recent file
         if (recentFile) {
             const recentPdfURL = recentFile.path;
-            document.getElementById('recent-pdf').src = recentPdfURL;
-            document.getElementById('recent-pdf-link').href = recentPdfURL;
-            document.getElementById('recent-pdf-link').textContent = recentFile.name;
+            loadPDF(recentPdfURL);
         }
     }
 
@@ -34,6 +36,34 @@ document.addEventListener('DOMContentLoaded', function() {
             link.target = '_blank';
             listItem.appendChild(link);
             list.appendChild(listItem);
+        });
+    }
+
+    function loadPDF(url) {
+        const loadingTask = getDocument(url);
+        loadingTask.promise.then(pdf => {
+            const viewer = document.getElementById('pdf-viewer');
+            viewer.innerHTML = '';
+
+            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                pdf.getPage(pageNum).then(page => {
+                    const scale = 1.5;
+                    const viewport = page.getViewport({ scale });
+
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    viewer.appendChild(canvas);
+
+                    const renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+                    page.render(renderContext);
+                });
+            }
         });
     }
 

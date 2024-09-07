@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Min Webavis</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="pdfjs-4.6.82-dist/web/viewer.css">
 </head>
 <body>
     <header>
@@ -17,10 +18,7 @@
 
     <section id="recent-article">
         <h2>Seneste Artikel</h2>
-        <iframe id="recent-pdf" src="" width="100%" height="600px">
-            Dette browser-vindue understøtter ikke PDF-embed. Du kan downloade filen 
-            <a id="recent-pdf-link" href="" target="_blank">her</a>.
-        </iframe>
+        <div id="pdf-viewer" class="pdfViewer"></div>
     </section>
 
     <section id="article-list">
@@ -34,6 +32,6 @@
         <p>© 2024 Min Webavis</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
