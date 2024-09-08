@@ -12,8 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const lastModifiedCell = document.createElement('td');
 
                 const link = document.createElement('a');
-                link.href = `pdf/${file.name}`;
+                link.href = `#`;
                 link.textContent = file.name;
+                link.dataset.file = file.name; // Store file name in a data attribute
+                link.classList.add('pdf-link');
                 fileNameCell.appendChild(link);
 
                 lastModifiedCell.textContent = new Date(file.lastModified).toLocaleString();
@@ -21,6 +23,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 row.appendChild(fileNameCell);
                 row.appendChild(lastModifiedCell);
                 tableBody.appendChild(row);
+            });
+
+            // Attach click event to all links
+            document.querySelectorAll('.pdf-link').forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent default link behavior
+                    const fileName = this.dataset.file;
+                    const iframe = document.getElementById('pdf-viewer');
+                    const downloadLink = document.getElementById('download-link');
+                    iframe.src = `pdf/${fileName}`;
+                    downloadLink.href = `pdf/${fileName}`;
+                    downloadLink.textContent = fileName;
+                });
             });
         })
         .catch(error => console.error('Error fetching PDF files:', error));

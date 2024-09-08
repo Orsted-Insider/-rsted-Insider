@@ -1,92 +1,103 @@
 /* Grundlæggende opsætning */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: transparent; /* Transparent background */
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-x: hidden; /* Disable horizontal scrolling */
+    -ms-touch-action: manipulation; /* Disable zooming in IE */
+    touch-action: manipulation; /* Disable zooming in modern browsers */
+}
+
+/* Container to hold header and iframe */
+.container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 /* Header */
 header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
     background-color: #333;
     color: white;
-    padding: 15px 20px;
-    text-align: center;
+    width: 100%;
+    z-index: 1000;
+    flex-shrink: 0; /* Prevent shrinking */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
-header h1 {
-    margin: 0;
+/* Logo section */
+.logo {
+    display: flex;
+    align-items: flex-start; /* Align items to the top */
+}
+
+.logo-img {
+    width: 40px; /* Adjust logo size as needed */
+    height: 40px;
+    margin-right: 10px; /* Space between logo and text */
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column; /* Stack h1 and h2 vertically */
+}
+
+.logo h1, .logo h2 {
+    margin: 0; /* Remove margin */
+}
+
+.logo h1 {
+    font-size: 1.5em;
+}
+
+.logo h2 {
+    font-size: 0.9em;
+    color: #ccc; /* Different color for the subtitle */
 }
 
 nav {
-    margin-top: 10px;
+    display: flex;
+    gap: 15px;
 }
 
-nav a {
+nav a.btn {
     color: white;
-    margin: 0 15px;
     text-decoration: none;
     font-weight: bold;
+    padding: 10px 20px;
+    background-color: #555;
+    border-radius: 5px;
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
-nav a:hover {
-    text-decoration: underline;
+nav a.btn:hover {
+    background-color: #777;
 }
 
-/* Sektioner */
-section {
-    margin: 20px;
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Article List */
-#article-list ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-#article-list li {
-    margin: 10px 0;
-}
-
-#article-list a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-#article-list a:hover {
-    text-decoration: underline;
-}
-
-/* Iframe */
-iframe {
+/* Iframe for PDF */
+.pdf-viewer {
     border: none;
-    border-radius: 8px;
+    width: 100%;  /* Full container width */
+    height: calc(100vh - 60px); /* Adjust height to account for header */
+    background-color: transparent; /* No background */
+    flex: 1; /* Allow iframe to grow */
+    overflow: hidden; /* Hide scrollbars */
 }
 
-/* Footer */
-footer {
-    text-align: center;
-    padding: 15px 20px;
-    background-color: #333;
-    color: white;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+/* Remove scrollbars */
+body::-webkit-scrollbar {
+    display: none; /* For WebKit browsers */
 }
 
-/* Responsivitet */
-@media (max-width: 768px) {
-    nav a {
-        display: block;
-        margin: 5px 0;
-    }
-
-    section {
-        margin: 10px;
-    }
+body {
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+    scrollbar-width: none; /* For Firefox */
 }
